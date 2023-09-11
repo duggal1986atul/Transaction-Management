@@ -3,8 +3,7 @@ info:
   title: Transaction - OpenAPI 3.0
   description: Transaction API Spec
   version: 1.0.0
-servers:
-  - url: api/v1
+
 paths:
   '/purchase/{id}':
     get:
@@ -72,7 +71,6 @@ components:
       properties:
         identifier:
           type: integer
-          format: int64
         description:
           type: string
           maxLength: 50

@@ -1,23 +1,18 @@
 package com.converter.currency.TransactionManagement.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "Purchase_transaction")
-public class PurchaseTransaction {
+public class PurchaseTransactionEntity {
 
     @Id
     @Column(name = "identifier", nullable = false)
