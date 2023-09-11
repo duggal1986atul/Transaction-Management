@@ -1,12 +1,43 @@
 openapi: 3.0.3
 info:
   title: Transaction - OpenAPI 3.0
-  description: |-
-    Transaction API Spec
+  description: Transaction API Spec
   version: 1.0.0
 servers:
   - url: api/v1
 paths:
+  '/purchase/{id}':
+    get:
+      tags:
+        - transaction
+      summary: get transaction by Id and conversion to country exchange rate
+      description: get transaction by Id and conversion to country exchange rate
+      operationId: getTransaction
+      parameters:
+        - in: path
+          name: id
+          description: Transaction ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - in: query
+          name: country
+          description: country code
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful get operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '404':
+          description: Resource Not Found
+        '500':
+          description: Internal Server Error
   /purchase:
     post:
       tags:
@@ -41,6 +72,7 @@ components:
       properties:
         identifier:
           type: integer
+          format: int64
         description:
           type: string
           maxLength: 50
@@ -58,8 +90,8 @@ components:
           type: number
           format: double
 
-        required: # Correct
-          - identifier
-          - description
-          - transactionDate
-          - amount
+      required:
+        - identifier
+        - description
+        - transactionDate
+        - amount
