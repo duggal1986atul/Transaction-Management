@@ -97,6 +97,7 @@
 					<excludes>
 						<exclude>**/exception/*</exclude>
 						<exclude>**/configuration/*</exclude>
+						<exclude>**/mapper/*</exclude>
 					</excludes>
 				</configuration>
 				<version>0.8.10</version>
