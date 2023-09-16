@@ -1,6 +1,9 @@
 package com.converter.currency.TransactionManagement.controller;
 
+import com.converter.currency.TransactionManagement.Exception.PurchaseTransactionNotFoundException;
+import com.converter.currency.TransactionManagement.Exception.ServerSideException;
 import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
+import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
 import com.converter.currency.TransactionManagement.service.TransactionService;
 import jakarta.validation.Valid;
@@ -10,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -26,14 +26,24 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @GetMapping(path = "/transactions/{transactionId}/country{country}")
-    public ResponseEntity<TransactionRequestDto> getTransaction(Long id, String country) {
-        TransactionRequestDto transactionRequestDto = new TransactionRequestDto();
-        return new ResponseEntity(transactionRequestDto, HttpStatus.OK);
-    }
+    @GetMapping(path = "/transactions/{transactionId}/country/{country}")
+    public ResponseEntity<TransactionResponseDTO> getTransaction(@PathVariable Integer transactionId, @PathVariable String country) throws PurchaseTransactionNotFoundException {
+        TransactionResponseDTO responseDTO = new TransactionResponseDTO();
+        if (ObjectUtils.isEmpty(transactionId) || ObjectUtils.isEmpty(country)) {
+            log.error("invalid request params ");
+            return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            responseDTO = transactionService.getTransaction(transactionId, country);
+        } catch (PurchaseTransactionNotFoundException e) {
+            log.error("Resource not found {}", e.getMessage());
+            return new ResponseEntity(responseDTO, HttpStatus.NOT_FOUND);
+        }
+        return  new ResponseEntity(responseDTO, HttpStatus.OK);
+      }
 
     @PostMapping(path = "/addTransactions",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addTransaction(@Valid @RequestBody TransactionRequestDto transactionRequestDto) {
+    public ResponseEntity<String> addTransaction(@Valid @RequestBody TransactionRequestDto transactionRequestDto) throws ServerSideException {
         log.info("request Dto in controller layer {}", transactionRequestDto);
         PurchaseTransactionEntity purchaseTransactionEntity = transactionService.save(transactionRequestDto);
         if(ObjectUtils.isEmpty(purchaseTransactionEntity))

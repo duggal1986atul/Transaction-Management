@@ -1,10 +1,10 @@
 package com.converter.currency.TransactionManagement.controller;
 
 import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
+import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
 import com.converter.currency.TransactionManagement.service.TransactionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,10 +36,8 @@ public class TransactionControllerTest {
     TransactionRequestDto transactionRequestDto;
 
     PurchaseTransactionEntity purchaseTransactionEntity;
-    @BeforeEach
-    public void setup() {
 
-    }
+    TransactionResponseDTO responseDTO;
 
     @Test
     public void testPostTransactionsBadRequest() throws Exception {
@@ -48,6 +47,14 @@ public class TransactionControllerTest {
                         .content(body))
                 //Then
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testGetPurchaseTransactionSuccess() throws Exception {
+        given(transactionService.getTransaction(1,"India")).willReturn(getPurchaseResponseDto());
+        mvc.perform(get("/transactions/{transactionId}/country/{country}",1,"India")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -81,5 +88,14 @@ public class TransactionControllerTest {
         purchaseTransactionEntity.setTransactionDate(LocalDate.now());
         purchaseTransactionEntity.setDescription("test currency");
         return purchaseTransactionEntity;
+    }
+
+    private TransactionResponseDTO getPurchaseResponseDto() {
+        responseDTO = new TransactionResponseDTO();
+        responseDTO.setAmount(new BigDecimal(50.0));
+        responseDTO.setIdentifier(1);
+        responseDTO.setTransactionDate(LocalDate.now());
+        responseDTO.setDescription("test currency");
+        return responseDTO;
     }
 }
