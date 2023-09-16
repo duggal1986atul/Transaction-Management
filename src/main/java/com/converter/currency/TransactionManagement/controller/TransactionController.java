@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,7 +30,7 @@ public class TransactionController {
     @GetMapping(path = "/transactions/{transactionId}/country/{country}")
     public ResponseEntity<TransactionResponseDTO> getTransaction(@PathVariable Integer transactionId, @PathVariable String country) throws PurchaseTransactionNotFoundException {
         TransactionResponseDTO responseDTO = new TransactionResponseDTO();
-        if (ObjectUtils.isEmpty(transactionId) || ObjectUtils.isEmpty(country)) {
+        if (ObjectUtils.isEmpty(transactionId) || ObjectUtils.isEmpty(country)|| StringUtils.containsWhitespace(country)) {
             log.error("invalid request params ");
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }

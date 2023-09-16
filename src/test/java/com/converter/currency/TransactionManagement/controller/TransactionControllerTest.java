@@ -58,6 +58,12 @@ public class TransactionControllerTest {
     }
 
     @Test
+    public void testGetPurchaseTransactionBadRequest() throws Exception {
+        mvc.perform(get("/transactions/{transactionId}/country/{country}",1," ").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void testPostTransactionsSuccess() throws Exception {
         String body = objectMapper.writeValueAsString(setValidRequestBody());
         given(transactionService.save(setValidRequestBody())).willReturn(getPurchaseTransactionEntity());
