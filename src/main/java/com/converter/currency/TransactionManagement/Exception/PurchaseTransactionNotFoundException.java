@@ -1,11 +1,9 @@
 package com.converter.currency.TransactionManagement.Exception;
 
 public class TransactionNotFoundException extends Exception {
-    TransactionNotFoundException() {
+    public TransactionNotFoundException() {}
 
-    }
-
-    TransactionNotFoundException(String message) {
+    public TransactionNotFoundException(String message) {
         super(message);
     }
 
