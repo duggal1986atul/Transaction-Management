@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class PurchaseTransactionEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "identifier", nullable = false)
     private Integer identifier;
 
