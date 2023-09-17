@@ -56,7 +56,9 @@ public class TransactionServiceTest {
     public void saveTransactionTest() throws  Exception{
         when(mapper.map(getValidRequestBody())).thenReturn(getPurchaseTransactionEntity());
         when(transactionRepository.save(getPurchaseTransactionEntity())).thenReturn(getPurchaseTransactionEntity());
+
         PurchaseTransactionEntity purchaseTransactionEntity = transactionService.save(getValidRequestBody());
+
         assertNotNull(purchaseTransactionEntity);
     }
 
@@ -65,7 +67,9 @@ public class TransactionServiceTest {
         when(transactionRepository.findById(1)).thenReturn(Optional.of(getPurchaseTransactionEntity()));
         when(fiscalClient.connectToFiscalUrl(LocalDate.now(),"India")).thenReturn(getFiscalData());
         when(mapper.mapToResponseDto(getPurchaseTransactionEntity(),getFiscalData().getData().get(0).getExchange_rate())).thenReturn(getTransactionResponseDto());
+
         TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
+
         assertNotNull(responseDTO);
     }
 
@@ -76,6 +80,7 @@ public class TransactionServiceTest {
             TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
 
         });
+
         Assertions.assertEquals("Purchase transaction not available for calculations:->1", thrown.getMessage());
     }
 
@@ -86,6 +91,7 @@ public class TransactionServiceTest {
             when(fiscalClient.connectToFiscalUrl(LocalDate.now(),"India")).thenReturn(null);
             TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
         });
+
         Assertions.assertEquals("exchange rate not available for rest client look up->1", thrown.getMessage());
     }
 
@@ -116,7 +122,6 @@ public class TransactionServiceTest {
         responseDTO.setDescription("currency test");
         responseDTO.setConvertedAmount(new BigDecimal(4130));
         return responseDTO;
-
     }
 
     private PurchaseTransactionEntity getPurchaseTransactionEntity() {
@@ -127,4 +132,4 @@ public class TransactionServiceTest {
         purchaseTransactionEntity.setDescription("test currency");
         return purchaseTransactionEntity;
     }
-}
+ }

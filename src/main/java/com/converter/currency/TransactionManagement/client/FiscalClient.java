@@ -31,6 +31,7 @@ public class FiscalClient {
         LocalDate filterDate = recordDate.minusMonths(6);
 
         compositeUrl = fiscalUrlConfig.getUrl() + "filter=record_date:gte:" + filterDate + ",country:eq:" + country;
+
         try {
             log.info("invoking url for filterDate {}",filterDate);
             responseDto = restTemplate.getForEntity(compositeUrl, FiscalDataResponseDto.class);
@@ -39,7 +40,6 @@ public class FiscalClient {
         } catch (RestClientResponseException exception) {
             log.error("An error has occured while connecting to url {}", compositeUrl);
             responseDto = new ResponseEntity<>(HttpStatusCode.valueOf(exception.getRawStatusCode()));
-
         }
         if(!ObjectUtils.isEmpty(responseDto)&& !ObjectUtils.isEmpty(responseDto.getBody())) {
             log.info("responseDto.getBody() {}", responseDto.getBody());
@@ -47,4 +47,4 @@ public class FiscalClient {
         }
         return null;
     }
-}
+ }

@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 
 @Component
-@Slf4j
 public class TransactionMapper {
     public PurchaseTransactionEntity map(final TransactionRequestDto transactionDtoRequestRequestDto) {
         PurchaseTransactionEntity transaction = new PurchaseTransactionEntity();

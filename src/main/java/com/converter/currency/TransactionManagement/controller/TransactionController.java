@@ -30,13 +30,16 @@ public class TransactionController {
     @GetMapping(path = "/transactions/{transactionId}/country/{country}")
     public ResponseEntity<TransactionResponseDTO> getTransaction(@PathVariable Integer transactionId, @PathVariable String country) throws PurchaseTransactionNotFoundException {
         TransactionResponseDTO responseDTO = new TransactionResponseDTO();
+
         if (ObjectUtils.isEmpty(transactionId) || ObjectUtils.isEmpty(country)|| StringUtils.containsWhitespace(country)) {
             log.error("invalid request params ");
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }
+
         try {
             responseDTO = transactionService.getTransaction(transactionId, country);
-        } catch (PurchaseTransactionNotFoundException e) {
+        }
+        catch (PurchaseTransactionNotFoundException e) {
             log.error("Resource not found {}", e.getMessage());
             return new ResponseEntity(responseDTO, HttpStatus.NOT_FOUND);
         }
@@ -46,9 +49,12 @@ public class TransactionController {
     @PostMapping(path = "/addTransactions",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addTransaction(@Valid @RequestBody TransactionRequestDto transactionRequestDto) throws ServerSideException {
         log.info("request Dto in controller layer {}", transactionRequestDto);
+
         PurchaseTransactionEntity purchaseTransactionEntity = transactionService.save(transactionRequestDto);
-        if(ObjectUtils.isEmpty(purchaseTransactionEntity))
+
+        if(ObjectUtils.isEmpty(purchaseTransactionEntity)) {
             new ResponseEntity("Some Internal Server error has occured", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity("Record Created Successfully", HttpStatus.CREATED);
     }
-}
+ }

@@ -40,17 +40,20 @@ public class TransactionServiceImpl implements TransactionService{
     @Override
     public TransactionResponseDTO getTransaction(Integer id, String countryCode)throws PurchaseTransactionNotFoundException {
         log.info("calculate currency exchange for id:-{} countrycode:-{}",id,countryCode);
+
         Optional<PurchaseTransactionEntity> purchaseTransactionEntity = transactionRepository.findById(id);
+
         if(purchaseTransactionEntity.isEmpty()|| ObjectUtils.isEmpty(purchaseTransactionEntity.get().getTransactionDate())){
             log.error("purchase transaction not available for rest client look up {}",id);
             throw new PurchaseTransactionNotFoundException("Purchase transaction not available for calculations:->"+id);
         }
+
         FiscalDataResponseDto responseDto = fiscalClient.connectToFiscalUrl(purchaseTransactionEntity.get().getTransactionDate(), countryCode);
+
         if(ObjectUtils.isEmpty(responseDto)||ObjectUtils.isEmpty(responseDto.getData())||responseDto.getData().isEmpty()||ObjectUtils.isEmpty(responseDto.getData().get(0).getExchange_rate())){
             log.error("exchange rate not available for rest client look up {}",id);
             throw new PurchaseTransactionNotFoundException("exchange rate not available for rest client look up->"+id);
         }
-        PurchaseTransactionEntity obj = purchaseTransactionEntity.get();
 
         return transactionMapper.mapToResponseDto(purchaseTransactionEntity.get(),responseDto.getData().get(0).getExchange_rate());
     }
@@ -66,4 +69,4 @@ public class TransactionServiceImpl implements TransactionService{
             throw new ServerSideException(exception.getMessage());
         }
     }
-}
+ }
