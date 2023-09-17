@@ -8,7 +8,7 @@ import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
 import com.converter.currency.TransactionManagement.mapper.TransactionMapper;
 import com.converter.currency.TransactionManagement.repository.TransactionRepository;
-import com.converter.currency.TransactionManagement.utility.FiscalClient;
+import com.converter.currency.TransactionManagement.client.FiscalClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

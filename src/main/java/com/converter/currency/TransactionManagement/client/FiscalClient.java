@@ -1,4 +1,4 @@
-package com.converter.currency.TransactionManagement.utility;
+package com.converter.currency.TransactionManagement.client;
 
 import com.converter.currency.TransactionManagement.configuration.FiscalUrlConfig;
 import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
@@ -25,7 +25,7 @@ public class FiscalClient {
         this.restTemplate = restTemplate;
         this.fiscalUrlConfig = fiscalUrlConfig;
     }
-    public FiscalDataResponseDto connectToFiscalUrl(final LocalDate recordDate, final String country) {
+    public FiscalDataResponseDto connectToFiscalUrl(final LocalDate recordDate, final String country){
 
         ResponseEntity<FiscalDataResponseDto> responseDto;
         LocalDate filterDate = recordDate.minusMonths(6);
@@ -41,7 +41,10 @@ public class FiscalClient {
             responseDto = new ResponseEntity<>(HttpStatusCode.valueOf(exception.getRawStatusCode()));
 
         }
-        log.info("responseDto.getBody() {}", responseDto.getBody());
-        return responseDto.getBody();
+        if(!ObjectUtils.isEmpty(responseDto)&& !ObjectUtils.isEmpty(responseDto.getBody())) {
+            log.info("responseDto.getBody() {}", responseDto.getBody());
+            return responseDto.getBody();
+        }
+        return null;
     }
 }

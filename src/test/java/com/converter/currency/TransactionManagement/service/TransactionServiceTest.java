@@ -4,6 +4,7 @@ package com.converter.currency.TransactionManagement.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import com.converter.currency.TransactionManagement.client.FiscalClient;
 import com.converter.currency.TransactionManagement.exception.PurchaseTransactionNotFoundException;
 import com.converter.currency.TransactionManagement.dto.Data;
 import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
@@ -12,7 +13,6 @@ import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
 import com.converter.currency.TransactionManagement.mapper.TransactionMapper;
 import com.converter.currency.TransactionManagement.repository.TransactionRepository;
-import com.converter.currency.TransactionManagement.utility.FiscalClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
