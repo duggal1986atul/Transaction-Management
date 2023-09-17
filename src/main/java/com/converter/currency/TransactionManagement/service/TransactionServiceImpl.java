@@ -40,6 +40,7 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public TransactionResponseDTO getTransaction(Integer id, String countryCode)throws PurchaseTransactionNotFoundException {
+        log.info("calculate currency exchange for id:-{} countrycode:-{}",id,countryCode);
         Optional<PurchaseTransactionEntity> purchaseTransactionEntity = transactionRepository.findById(id);
         if(purchaseTransactionEntity.isEmpty()|| ObjectUtils.isEmpty(purchaseTransactionEntity.get().getTransactionDate())){
             log.error("purchase transaction not available for rest client look up {}",id);

@@ -31,6 +31,7 @@ public class TransactionMapper {
         transactionResponseDTO.setExchangeRate(exchangeRate);
         transactionResponseDTO.setAmount(purchaseTransactionEntity.getAmount());
         transactionResponseDTO.setConvertedAmount(convertedAmount);
+        transactionResponseDTO.setTransactionDate(purchaseTransactionEntity.getTransactionDate());
 
         return transactionResponseDTO;
 
