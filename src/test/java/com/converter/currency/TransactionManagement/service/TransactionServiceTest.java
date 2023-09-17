@@ -1,5 +1,10 @@
 package com.converter.currency.TransactionManagement.service;
 
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
+
+import com.converter.currency.TransactionManagement.Exception.PurchaseTransactionNotFoundException;
 import com.converter.currency.TransactionManagement.dto.Data;
 import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
 import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
@@ -8,8 +13,10 @@ import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEn
 import com.converter.currency.TransactionManagement.mapper.TransactionMapper;
 import com.converter.currency.TransactionManagement.repository.TransactionRepository;
 import com.converter.currency.TransactionManagement.utility.FiscalClient;
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,12 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {
 
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
     @InjectMocks
     private TransactionServiceImpl transactionService;
     @Mock
@@ -63,6 +70,14 @@ public class TransactionServiceTest {
         when(mapper.mapToResponseDto(getPurchaseTransactionEntity(),getFiscalData().getData().get(0).getExchange_rate())).thenReturn(getTransactionResponseDto());
         TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
         assertNotNull(responseDTO);
+    }
+
+    @Test
+    public void getTransactionFailedScenarioRepoEmpty() throws  Exception{
+        expectedEx.expect(PurchaseTransactionNotFoundException.class);
+        expectedEx.expectMessage("Purchase transaction not available for calculations:->1");
+        when(transactionRepository.findById(1)).thenReturn(Optional.empty());
+        TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
     }
 
     private TransactionRequestDto getValidRequestBody() {
