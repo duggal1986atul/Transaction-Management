@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -14,6 +15,6 @@ public class Data {
     private LocalDate record_date;
     private String country;
     private String currency;
-    private Double exchange_rate;
+    private BigDecimal exchange_rate;
 
 }

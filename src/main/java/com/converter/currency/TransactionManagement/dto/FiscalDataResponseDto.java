@@ -1,14 +1,12 @@
 package com.converter.currency.TransactionManagement.dto;
+import lombok.*;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.List;
+
 
 @Getter
-@Data
 @Setter
 @NoArgsConstructor
 public class FiscalDataResponseDto {
-    private Data data;
+    private List<Data> data;
 }

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 @Component
 @Slf4j
@@ -20,13 +21,17 @@ public class TransactionMapper {
         return transaction;
     }
 
-    public TransactionResponseDTO mapToResponseDto(final PurchaseTransactionEntity purchaseTransactionEntity)
+    public TransactionResponseDTO mapToResponseDto(final PurchaseTransactionEntity purchaseTransactionEntity,final BigDecimal exchangeRate)
     {
+        MathContext mc = new MathContext(4); // 4 precision
+        BigDecimal convertedAmount = purchaseTransactionEntity.getAmount().multiply(exchangeRate, mc);
         TransactionResponseDTO transactionResponseDTO = new TransactionResponseDTO();
         transactionResponseDTO.setIdentifier(purchaseTransactionEntity.getIdentifier());
         transactionResponseDTO.setDescription(purchaseTransactionEntity.getDescription());
-        transactionResponseDTO.setExchangeRate(new BigDecimal(82.90));
+        transactionResponseDTO.setExchangeRate(exchangeRate);
         transactionResponseDTO.setAmount(purchaseTransactionEntity.getAmount());
+        transactionResponseDTO.setConvertedAmount(convertedAmount);
+
         return transactionResponseDTO;
 
     }

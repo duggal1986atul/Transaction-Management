@@ -77,7 +77,7 @@ public class TransactionControllerTest {
         transactionRequestDto = new TransactionRequestDto();
         transactionRequestDto.setTransactionDate(LocalDate.now());
         transactionRequestDto.setDescription("test currency");
-        transactionRequestDto.setAmount(new BigDecimal(100));
+        transactionRequestDto.setAmount(new BigDecimal(50.0));
         return transactionRequestDto;
     }
 
@@ -98,6 +98,7 @@ public class TransactionControllerTest {
 
     private TransactionResponseDTO getPurchaseResponseDto() {
         responseDTO = new TransactionResponseDTO();
+        //responseDTO.setAmount(10.0);
         responseDTO.setAmount(new BigDecimal(50.0));
         responseDTO.setIdentifier(1);
         responseDTO.setTransactionDate(LocalDate.now());
