@@ -4,7 +4,7 @@ package com.converter.currency.TransactionManagement.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import com.converter.currency.TransactionManagement.Exception.PurchaseTransactionNotFoundException;
+import com.converter.currency.TransactionManagement.exception.PurchaseTransactionNotFoundException;
 import com.converter.currency.TransactionManagement.dto.Data;
 import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
 import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
@@ -13,10 +13,9 @@ import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEn
 import com.converter.currency.TransactionManagement.mapper.TransactionMapper;
 import com.converter.currency.TransactionManagement.repository.TransactionRepository;
 import com.converter.currency.TransactionManagement.utility.FiscalClient;
-import org.junit.Rule;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -33,8 +32,6 @@ import java.util.Optional;
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {
 
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
     @InjectMocks
     private TransactionServiceImpl transactionService;
     @Mock
@@ -74,19 +71,22 @@ public class TransactionServiceTest {
 
     @Test
     public void getTransactionFailedScenarioRepoEmpty() throws  Exception{
-        expectedEx.expect(PurchaseTransactionNotFoundException.class);
-        expectedEx.expectMessage("Purchase transaction not available for calculations:->1");
-        when(transactionRepository.findById(1)).thenReturn(Optional.empty());
-        TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
+        PurchaseTransactionNotFoundException thrown = Assertions.assertThrows(PurchaseTransactionNotFoundException.class, () -> {
+            when(transactionRepository.findById(1)).thenReturn(Optional.empty());
+            TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
+
+        });
+        Assertions.assertEquals("Purchase transaction not available for calculations:->1", thrown.getMessage());
     }
 
     @Test
     public void getTransactionFailedScenarioUrlClientFallout() throws  Exception{
-        expectedEx.expect(PurchaseTransactionNotFoundException.class);
-        expectedEx.expectMessage("exchange rate not available for rest client look up->1");
-        when(transactionRepository.findById(1)).thenReturn(Optional.of(getPurchaseTransactionEntity()));
-        when(fiscalClient.connectToFiscalUrl(LocalDate.now(),"India")).thenReturn(null);
-        TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
+        PurchaseTransactionNotFoundException thrown = Assertions.assertThrows(PurchaseTransactionNotFoundException.class, () -> {
+            when(transactionRepository.findById(1)).thenReturn(Optional.of(getPurchaseTransactionEntity()));
+            when(fiscalClient.connectToFiscalUrl(LocalDate.now(),"India")).thenReturn(null);
+            TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
+        });
+        Assertions.assertEquals("exchange rate not available for rest client look up->1", thrown.getMessage());
     }
 
     private TransactionRequestDto getValidRequestBody() {
@@ -97,8 +97,7 @@ public class TransactionServiceTest {
         return transactionRequestDto;
     }
 
-    private FiscalDataResponseDto getFiscalData()
-    {
+    private FiscalDataResponseDto getFiscalData() {
         FiscalDataResponseDto dto = new FiscalDataResponseDto();
         List<Data> dataList = new ArrayList<>();
         Data data = new Data();
@@ -114,11 +113,12 @@ public class TransactionServiceTest {
     private TransactionResponseDTO getTransactionResponseDto() {
         TransactionResponseDTO responseDTO = new TransactionResponseDTO();
         responseDTO.setAmount(new BigDecimal("50.0"));
-       responseDTO.setDescription("currency test");
+        responseDTO.setDescription("currency test");
         responseDTO.setConvertedAmount(new BigDecimal(4130));
         return responseDTO;
 
     }
+
     private PurchaseTransactionEntity getPurchaseTransactionEntity() {
         purchaseTransactionEntity = new PurchaseTransactionEntity();
         purchaseTransactionEntity.setAmount(new BigDecimal("50.0"));

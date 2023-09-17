@@ -1,7 +1,7 @@
 package com.converter.currency.TransactionManagement.service;
 
-import com.converter.currency.TransactionManagement.Exception.PurchaseTransactionNotFoundException;
-import com.converter.currency.TransactionManagement.Exception.ServerSideException;
+import com.converter.currency.TransactionManagement.exception.PurchaseTransactionNotFoundException;
+import com.converter.currency.TransactionManagement.exception.ServerSideException;
 import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
 import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
 import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service

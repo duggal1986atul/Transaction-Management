@@ -1,4 +1,4 @@
-package com.converter.currency.TransactionManagement.Exception;
+package com.converter.currency.TransactionManagement.exception;
 
 
 import jakarta.servlet.http.HttpServletRequest;

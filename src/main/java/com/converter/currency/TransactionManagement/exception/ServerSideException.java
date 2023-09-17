@@ -1,4 +1,4 @@
-package com.converter.currency.TransactionManagement.Exception;
+package com.converter.currency.TransactionManagement.exception;
 
 public class ServerSideException extends Exception {
 

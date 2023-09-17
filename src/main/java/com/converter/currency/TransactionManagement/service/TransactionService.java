@@ -1,7 +1,7 @@
 package com.converter.currency.TransactionManagement.service;
 
-import com.converter.currency.TransactionManagement.Exception.PurchaseTransactionNotFoundException;
-import com.converter.currency.TransactionManagement.Exception.ServerSideException;
+import com.converter.currency.TransactionManagement.exception.PurchaseTransactionNotFoundException;
+import com.converter.currency.TransactionManagement.exception.ServerSideException;
 import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
 import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;

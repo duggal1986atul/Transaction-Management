@@ -1,4 +1,4 @@
-package com.converter.currency.TransactionManagement.Exception;
+package com.converter.currency.TransactionManagement.exception;
 
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
