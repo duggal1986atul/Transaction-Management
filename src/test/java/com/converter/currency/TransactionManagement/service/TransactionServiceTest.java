@@ -80,6 +80,15 @@ public class TransactionServiceTest {
         TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
     }
 
+    @Test
+    public void getTransactionFailedScenarioUrlClientFallout() throws  Exception{
+        expectedEx.expect(PurchaseTransactionNotFoundException.class);
+        expectedEx.expectMessage("exchange rate not available for rest client look up->1");
+        when(transactionRepository.findById(1)).thenReturn(Optional.of(getPurchaseTransactionEntity()));
+        when(fiscalClient.connectToFiscalUrl(LocalDate.now(),"India")).thenReturn(null);
+        TransactionResponseDTO responseDTO = transactionService.getTransaction(1,"India");
+    }
+
     private TransactionRequestDto getValidRequestBody() {
         transactionRequestDto = new TransactionRequestDto();
         transactionRequestDto.setTransactionDate(LocalDate.now());
