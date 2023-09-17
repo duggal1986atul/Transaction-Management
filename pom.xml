@@ -98,6 +98,7 @@
 						<exclude>**/exception/*</exclude>
 						<exclude>**/configuration/*</exclude>
 						<exclude>**/mapper/*</exclude>
+						<exclude>**/dto/*</exclude>
 					</excludes>
 				</configuration>
 				<version>0.8.10</version>
