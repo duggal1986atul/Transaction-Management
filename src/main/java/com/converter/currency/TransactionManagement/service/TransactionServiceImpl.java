@@ -2,8 +2,8 @@ package com.converter.currency.TransactionManagement.service;
 
 import com.converter.currency.TransactionManagement.exception.PurchaseTransactionNotFoundException;
 import com.converter.currency.TransactionManagement.exception.ServerSideException;
-import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
-import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
+import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDTO;
+import com.converter.currency.TransactionManagement.dto.TransactionRequestDTO;
 import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
 import com.converter.currency.TransactionManagement.mapper.TransactionMapper;
@@ -48,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService{
             throw new PurchaseTransactionNotFoundException("Purchase transaction not available for calculations:->"+id);
         }
 
-        FiscalDataResponseDto responseDto = fiscalClient.connectToFiscalUrl(purchaseTransactionEntity.get().getTransactionDate(), countryCode);
+        FiscalDataResponseDTO responseDto = fiscalClient.connectToFiscalUrl(purchaseTransactionEntity.get().getTransactionDate(), countryCode);
 
         if(ObjectUtils.isEmpty(responseDto)||ObjectUtils.isEmpty(responseDto.getData())||responseDto.getData().isEmpty()||ObjectUtils.isEmpty(responseDto.getData().get(0).getExchange_rate())){
             log.error("exchange rate not available for rest client look up {}",id);
@@ -59,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public PurchaseTransactionEntity save(TransactionRequestDto transactionRequestDto) throws ServerSideException {
+    public PurchaseTransactionEntity save(TransactionRequestDTO transactionRequestDto) throws ServerSideException {
         log.info("inside service layer to save transaction{}",transactionRequestDto);
         try {
             return  transactionRepository.save(transactionMapper.map(transactionRequestDto));

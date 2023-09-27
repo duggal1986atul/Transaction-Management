@@ -1,7 +1,7 @@
 package com.converter.currency.TransactionManagement.client;
 
 import com.converter.currency.TransactionManagement.configuration.FiscalUrlConfig;
-import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
+import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +25,16 @@ public class FiscalClient {
         this.restTemplate = restTemplate;
         this.fiscalUrlConfig = fiscalUrlConfig;
     }
-    public FiscalDataResponseDto connectToFiscalUrl(final LocalDate recordDate, final String country){
+    public FiscalDataResponseDTO connectToFiscalUrl(final LocalDate recordDate, final String country){
 
-        ResponseEntity<FiscalDataResponseDto> responseDto;
+        ResponseEntity<FiscalDataResponseDTO> responseDto;
         LocalDate filterDate = recordDate.minusMonths(6);
 
         compositeUrl = fiscalUrlConfig.getUrl() + "filter=record_date:gte:" + filterDate + ",country:eq:" + country;
 
         try {
             log.info("invoking url for filterDate {}",filterDate);
-            responseDto = restTemplate.getForEntity(compositeUrl, FiscalDataResponseDto.class);
+            responseDto = restTemplate.getForEntity(compositeUrl, FiscalDataResponseDTO.class);
 
 
         } catch (RestClientResponseException exception) {

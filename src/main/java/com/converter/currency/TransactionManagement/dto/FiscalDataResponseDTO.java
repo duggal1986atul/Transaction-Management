@@ -7,6 +7,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FiscalDataResponseDto {
+public class FiscalDataResponseDTO {
     private List<Data> data;
 }

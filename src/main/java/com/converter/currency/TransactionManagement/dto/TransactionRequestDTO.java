@@ -15,7 +15,7 @@ import lombok.Setter;
 @Data
 @Setter
 @NoArgsConstructor
-public class TransactionRequestDto {
+public class TransactionRequestDTO {
     @Size(max = 50, message
             = "description must be max 50 characters")
     private String description;

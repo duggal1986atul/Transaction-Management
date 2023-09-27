@@ -2,7 +2,7 @@ package com.converter.currency.TransactionManagement.controller;
 
 import com.converter.currency.TransactionManagement.exception.PurchaseTransactionNotFoundException;
 import com.converter.currency.TransactionManagement.exception.ServerSideException;
-import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
+import com.converter.currency.TransactionManagement.dto.TransactionRequestDTO;
 import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
 import com.converter.currency.TransactionManagement.service.TransactionService;
@@ -47,7 +47,7 @@ public class TransactionController {
       }
 
     @PostMapping(path = "/addTransactions",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addTransaction(@Valid @RequestBody TransactionRequestDto transactionRequestDto) throws ServerSideException {
+    public ResponseEntity<String> addTransaction(@Valid @RequestBody TransactionRequestDTO transactionRequestDto) throws ServerSideException {
         log.info("request Dto in controller layer {}", transactionRequestDto);
 
         PurchaseTransactionEntity purchaseTransactionEntity = transactionService.save(transactionRequestDto);

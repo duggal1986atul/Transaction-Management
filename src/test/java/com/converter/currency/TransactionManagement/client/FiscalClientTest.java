@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.converter.currency.TransactionManagement.configuration.FiscalUrlConfig;
 import com.converter.currency.TransactionManagement.dto.Data;
-import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
+import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDTO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -54,13 +53,13 @@ public class FiscalClientTest {
                         any(), any()))
           .thenReturn(new ResponseEntity(getFiscalData(), HttpStatus.OK));
 
-        FiscalDataResponseDto responseDto = fiscalClient.connectToFiscalUrl(LocalDate.now(),"India");
+        FiscalDataResponseDTO responseDto = fiscalClient.connectToFiscalUrl(LocalDate.now(),"India");
 
         assertNull(responseDto);
     }
 
-    private FiscalDataResponseDto getFiscalData() {
-        FiscalDataResponseDto dto = new FiscalDataResponseDto();
+    private FiscalDataResponseDTO getFiscalData() {
+        FiscalDataResponseDTO dto = new FiscalDataResponseDTO();
         List<Data> dataList = new ArrayList<>();
         Data data = new Data();
         data.setCountry("India");

@@ -1,10 +1,9 @@
 package com.converter.currency.TransactionManagement.mapper;
 
 
-import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
+import com.converter.currency.TransactionManagement.dto.TransactionRequestDTO;
 import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -12,7 +11,7 @@ import java.math.MathContext;
 
 @Component
 public class TransactionMapper {
-    public PurchaseTransactionEntity map(final TransactionRequestDto transactionDtoRequestRequestDto) {
+    public PurchaseTransactionEntity map(final TransactionRequestDTO transactionDtoRequestRequestDto) {
         PurchaseTransactionEntity transaction = new PurchaseTransactionEntity();
         transaction.setDescription(transactionDtoRequestRequestDto.getDescription());
         transaction.setTransactionDate(transactionDtoRequestRequestDto.getTransactionDate());

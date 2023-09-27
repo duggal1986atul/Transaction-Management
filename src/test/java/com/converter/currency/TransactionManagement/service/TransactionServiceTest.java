@@ -7,8 +7,8 @@ import static org.mockito.Mockito.when;
 import com.converter.currency.TransactionManagement.client.FiscalClient;
 import com.converter.currency.TransactionManagement.exception.PurchaseTransactionNotFoundException;
 import com.converter.currency.TransactionManagement.dto.Data;
-import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDto;
-import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
+import com.converter.currency.TransactionManagement.dto.FiscalDataResponseDTO;
+import com.converter.currency.TransactionManagement.dto.TransactionRequestDTO;
 import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
 import com.converter.currency.TransactionManagement.mapper.TransactionMapper;
@@ -43,7 +43,7 @@ public class TransactionServiceTest {
     @Mock
     private FiscalClient fiscalClient;
 
-    TransactionRequestDto transactionRequestDto;
+    TransactionRequestDTO transactionRequestDto;
 
     PurchaseTransactionEntity purchaseTransactionEntity;
     @BeforeEach
@@ -95,16 +95,16 @@ public class TransactionServiceTest {
         Assertions.assertEquals("exchange rate not available for rest client look up->1", thrown.getMessage());
     }
 
-    private TransactionRequestDto getValidRequestBody() {
-        transactionRequestDto = new TransactionRequestDto();
+    private TransactionRequestDTO getValidRequestBody() {
+        transactionRequestDto = new TransactionRequestDTO();
         transactionRequestDto.setTransactionDate(LocalDate.now());
         transactionRequestDto.setDescription("test currency");
         transactionRequestDto.setAmount(new BigDecimal("50.0"));
         return transactionRequestDto;
     }
 
-    private FiscalDataResponseDto getFiscalData() {
-        FiscalDataResponseDto dto = new FiscalDataResponseDto();
+    private FiscalDataResponseDTO getFiscalData() {
+        FiscalDataResponseDTO dto = new FiscalDataResponseDTO();
         List<Data> dataList = new ArrayList<>();
         Data data = new Data();
         data.setCountry("India");

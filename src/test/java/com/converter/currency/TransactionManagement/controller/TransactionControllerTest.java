@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-import com.converter.currency.TransactionManagement.dto.TransactionRequestDto;
+import com.converter.currency.TransactionManagement.dto.TransactionRequestDTO;
 import com.converter.currency.TransactionManagement.dto.TransactionResponseDTO;
 import com.converter.currency.TransactionManagement.entity.PurchaseTransactionEntity;
 import com.converter.currency.TransactionManagement.service.TransactionService;
@@ -35,7 +35,7 @@ public class TransactionControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    TransactionRequestDto transactionRequestDto;
+    TransactionRequestDTO transactionRequestDto;
 
     PurchaseTransactionEntity purchaseTransactionEntity;
 
@@ -75,16 +75,16 @@ public class TransactionControllerTest {
                 //Then
                 .andExpect(status().is2xxSuccessful());
     }
-    private TransactionRequestDto setValidRequestBody() {
-        transactionRequestDto = new TransactionRequestDto();
+    private TransactionRequestDTO setValidRequestBody() {
+        transactionRequestDto = new TransactionRequestDTO();
         transactionRequestDto.setTransactionDate(LocalDate.now());
         transactionRequestDto.setDescription("test currency");
         transactionRequestDto.setAmount(new BigDecimal(50.0));
         return transactionRequestDto;
     }
 
-    private TransactionRequestDto setInvalidRequestBody() {
-        TransactionRequestDto requestDTO = new TransactionRequestDto();
+    private TransactionRequestDTO setInvalidRequestBody() {
+        TransactionRequestDTO requestDTO = new TransactionRequestDTO();
         requestDTO.setAmount(null);
         return  requestDTO;
     }
